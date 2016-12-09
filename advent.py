@@ -20,7 +20,7 @@ def get_name(elem):
         return elem.text.strip()
 
 
-def parse_data():
+def aoc():
     r = requests.get(ADVENTOFCODE, cookies=ADVENT_COOKIE)
     if r.status_code == requests.codes.ok:
         members = r.json()["members"]
@@ -36,27 +36,29 @@ def parse_data():
                 output_string += "{0:<5} {1:<20}\n".format(str(stars), str(username))
                 top10 -= 1
         print(output_string)
+    else:
+        print("Advent of Code not working: " + str(r.status_code) + "\ncheck your cookies/leaderboard #")
 
-        try:
-            r = requests.get(DJUL, cookies=DJUL_COOKIES)
-            if r.status_code == 200:
-                c = r.content
-                soup = bs4.BeautifulSoup(c, "html5lib")
-                table = soup.find('table', attrs={'class': 'toplist'})
-                rows = table.find_all("tr")
-                return_string = 'KTH dJul:\n\n{0:<5} {1:<15} {2:<6} {3:<5}\n'.format("Plats", "Namn", "Lösta", "Tid")
-                for row in rows:
-                    cols = row.find_all("td")
-                    values = set(map(get_name, cols))
-                    if len(usernames.intersection(values)) > 0:
-                        return_string += '{0:<5} {1:<15} {2:<6} {3:<5}\n'.format(cols[0].text.strip(),
-                                                                                cols[1].a.text.strip(),
-                                                                                cols[2].text.strip(),
-                                                                                cols[3].text.strip())
-                print(return_string)
-            else:
-                print("Bad response: " + str(r.status_code))
-        except Exception as e:
-            print(e)
 
-parse_data()
+def djul():
+    r = requests.get(DJUL, cookies=DJUL_COOKIES)
+    if r.status_code == requests.codes.ok:
+        c = r.content
+        soup = bs4.BeautifulSoup(c, "html5lib")
+        table = soup.find('table', attrs={'class': 'toplist'})
+        rows = table.find_all("tr")
+        djul_string = 'KTH dJul:\n\n{0:<5} {1:<15} {2:<6} {3:<5}\n'.format("Plats", "Namn", "Lösta", "Tid")
+        for row in rows:
+            cols = row.find_all("td")
+            values = set(map(get_name, cols))
+            if len(usernames.intersection(values)) > 0:
+                djul_string += '{0:<5} {1:<15} {2:<6} {3:<5}\n'.format(cols[0].text.strip(),
+                                                                        cols[1].a.text.strip(),
+                                                                        cols[2].text.strip(),
+                                                                        cols[3].text.strip())
+        print(djul_string)
+    else:
+        print("dJulkalender not working: " + str(r.status_code) + "\ncheck your cookies")
+
+aoc()
+djul()
