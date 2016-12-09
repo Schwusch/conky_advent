@@ -4,7 +4,7 @@ Conky widget for Advent of Code and dJulkalendern
 ![alt text](screen.png)
 
 **Prerequisites**:
-- Python 3
+- Python 3.5
 - BeautifulSoup4
 
 # Install and run
@@ -22,7 +22,7 @@ You'll need a session cookie from the Advent of Code and djul.datasektionen.se w
 
 Go to the [Advent of Code Private Leaderboard](http://adventofcode.com/2016/leaderboard/private) page. Make sure you're logged in.
 Retrieve the leaderboard # in the url and put it in the script:
-```python 
+```python
 ADVENTOFCODE = 'http://adventofcode.com/2016/leaderboard/private/view/YOUR_PRIVATE_LEADERBOARD_NR.json'
 ```
 ### In Firefox:

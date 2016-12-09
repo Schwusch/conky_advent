@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 # coding: utf-8
-
+from concurrent.futures import ThreadPoolExecutor
 import requests
 import bs4
 
@@ -60,5 +60,8 @@ def djul():
     else:
         print("dJulkalender not working: " + str(r.status_code) + "\ncheck your cookies")
 
-aoc()
-djul()
+executor = ThreadPoolExecutor(max_workers=2)
+str1 = executor.submit(aoc)
+str2 = executor.submit(djul)
+
+print(str1.result() + "\n" + str2.result())
