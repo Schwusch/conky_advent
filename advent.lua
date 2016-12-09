@@ -50,5 +50,5 @@ conky.config = {
 };
 
 conky.text = [[
-${font Monospace:size=10:style=normal}${color2}${exec ~/.conky/AdventCalendars/advent.py}
+${font Monospace:size=10:style=normal}${color2}${exec ~/.conky/conky_advent/advent.py}
 ]]
