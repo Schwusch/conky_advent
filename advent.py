@@ -24,7 +24,7 @@ def aoc():
     r = requests.get(ADVENTOFCODE, cookies=ADVENT_COOKIE)
     if r.status_code == requests.codes.ok:
         members = r.json()["members"]
-        output_string = "adventofcode\n\n"
+        aoc_string = "adventofcode\n\n"
         # Get all members
         users = [(m["name"], m["stars"]) for m in members.values()]
         # Sort members by stars decending
@@ -33,11 +33,12 @@ def aoc():
         top10 = 10
         for username, stars in users:
             if top10 > 0:
-                output_string += "{0:<5} {1:<20}\n".format(str(stars), str(username))
+                aoc_string += "{0:<5} {1:<20}\n".format(str(stars), str(username))
                 top10 -= 1
-        print(output_string)
+        return aoc_string
     else:
-        print("Advent of Code not working: " + str(r.status_code) + "\ncheck your cookies/leaderboard #")
+        return "Advent of Code not working: " + str(r.status_code) + "\ncheck your cookies/leaderboard #"
+
 
 
 def djul():
@@ -56,9 +57,9 @@ def djul():
                                                                         cols[1].a.text.strip(),
                                                                         cols[2].text.strip(),
                                                                         cols[3].text.strip())
-        print(djul_string)
+        return djul_string
     else:
-        print("dJulkalender not working: " + str(r.status_code) + "\ncheck your cookies")
+        return "dJulkalender not working: " + str(r.status_code) + "\ncheck your cookies"
 
 executor = ThreadPoolExecutor(max_workers=2)
 str1 = executor.submit(aoc)
